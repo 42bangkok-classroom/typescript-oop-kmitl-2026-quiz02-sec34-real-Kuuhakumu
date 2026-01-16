@@ -1,3 +1,4 @@
+import axios from 'axios';
 type newUser = {
   name: string;
   username?: string;
@@ -20,4 +21,19 @@ type newUser = {
     bs: string;
   };
 };
-export function addUser(newUser: newUser | null) {}
+const fetch = async () => {
+  const res = await axios
+    .get('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.data)
+    .catch((error) => console.error('Error fetching data:', error));
+  return res;
+}
+export function addUser(newUser: newUser | null) {
+  return fetch().then((users) => {
+    const Post = axios.post(
+      'https://jsonplaceholder.typicode.com/users',
+      newUser
+    );
+    return Post;
+  });
+}
